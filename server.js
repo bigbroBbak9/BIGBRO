@@ -127,6 +127,35 @@ io.on('connection', (socket) => {
     });
 
 
+    //채팅.
+    socket.on('req_system_message', function (msg, channelFromAdmin) {
+        if (socket.user == undefined) {
+            console.log('undefined', ch);
+            return;
+        }
+        //if (global.mutes.hasOwnProperty(msg.name)) {
+        //    console.log('black', msg.name);
+        //    return;
+        //}
+        console.log('req_system_msg', socket.user, msg);
+        var ch = channelFromAdmin || socket.user.ch;
+
+        //Emit to Client
+        io.sockets.in(ch).emit('req_system_message', msg);
+
+        ////운영툴이 받음.
+        ////data.channel 필요.
+        //// data.channel = ch;
+        //io.sockets.in('admin_0').emit('res_message_all', msg);
+
+        ////지난 대화 저장.
+        //if (!global.histories[ch]) global.histories[ch] = [];
+        //global.histories[ch].push(msg);
+        //if (global.histories[ch].length > 10)
+        //    global.histories[ch].splice(0, 1);
+    });
+
+
 
     //시스템 메세지.
     socket.on('system message', function (msg) {
