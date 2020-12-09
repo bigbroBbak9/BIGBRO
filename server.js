@@ -105,7 +105,7 @@ io.on('connection', (socket) => {
         //지난 대화 저장.
         if (!global.histories[ch]) global.histories[ch] = [];
         global.histories[ch].push(msg);
-        if (global.histories[ch].length > 10)
+        if (global.histories[ch].length > 25)
             global.histories[ch].splice(0, 1);
     });
 
@@ -127,7 +127,7 @@ io.on('connection', (socket) => {
     });
 
 
-    //채팅.
+    //시스템.
     socket.on('req_system_message', function (msg, channelFromAdmin) {
         if (socket.user == undefined) {
             console.log('undefined', ch);
